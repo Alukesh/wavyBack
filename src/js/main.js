@@ -156,7 +156,7 @@ window.addEventListener('load', () => {
 
     ctxC2.fillStyle = 'white';
     ctxC2.font = '30px Verdana'; //Verdana Silkscreen
-    ctxC2.fillText('Eyescorp', 20,60,canvasText.width);
+    ctxC2.fillText('EyesCorp', 20,60,canvasText.width);
     // ctxC2.strokeStyle = 'white';
     // ctxC2.strokeRect(0,0,100,100);
     const textCoordinates = ctxC2.getImageData(0,0,200,100);
@@ -229,26 +229,45 @@ window.addEventListener('load', () => {
     }
     initText();
 
+
     function animateText() {
-        ctxC2.clearRect(0,0,canvasText.width,canvasText.height);
-        for (let i = 0; i < particleText.length; i++){
-            particleText[i].draw();
-            particleText[i].update();
+        if (TextOn){
+            ctxC2.clearRect(0,0,canvasText.width,canvasText.height);
+            for (let i = 0; i < particleText.length; i++){
+                particleText[i].draw();
+                particleText[i].update();
+            }
+            connectText();
+            TextRaf = requestAnimationFrame(animateText);
         }
-        connectText();
-        requestAnimationFrame(animateText);
+
     }
     animateText();
+    let stopTextAnimate;
+    canvasText.addEventListener("mouseout", () => {
+        stopTextAnimate = setTimeout(() => {
+            TextRaf = window.cancelAnimationFrame(TextRaf);
+            TextOn = false;
+        }, 1250);
+    });
+    canvasText.addEventListener("mouseover", () => {
+        TextRaf = window.requestAnimationFrame(animateText);
+        TextOn = true;
+        clearTimeout(stopTextAnimate)
+    });
 
     function connectText() {
+        let opacityValue = 1;
         for (let a = 0; a < particleText.length; a++){
             for (let b = a; b < particleText.length; b++){
                 let dx = particleText[a].x - particleText[b].x;
                 let dy = particleText[a].y - particleText[b].y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 23){
-                    ctxC2.strokeStyle = 'orange';
+                if (distance < 10){
+                    // opacityValue = 0.1;
+                    opacityValue = 1 - (distance/23);
+                    ctxC2.strokeStyle = 'rgba(155,255,255,' + opacityValue + ')';
                     ctxC2.lineWidth = 1;
                     ctxC2.beginPath();
                     ctxC2.moveTo(particleText[a].x, particleText[a].y);
