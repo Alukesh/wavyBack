@@ -48,9 +48,10 @@ section{
 
 }
 #name{
+    position: fixed;
+    /* z-index: 100; */
     top: 0;
     left: 0;
-    position: absolute;
     background-color: #fff;
     border: 1px solid black;
     padding: 8px;

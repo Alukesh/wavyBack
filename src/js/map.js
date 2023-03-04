@@ -15,7 +15,7 @@ document.querySelectorAll('.allPaths').forEach(el => {
         window.onmousemove = (j) => {
             x = j.clientX
             y = j.clientY
-            document.getElementById('name').style.top= y - 20+'px'
+            document.getElementById('name').style.top= y - 70+'px'
             document.getElementById('name').style.left= x - 20+'px'
         }
         el.style.fill = '#4d71a5'
