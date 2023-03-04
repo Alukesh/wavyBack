@@ -19,6 +19,46 @@ section{
     min-height: 400px;
     padding: 100px 20vw;
 }
+.container{
+    width: 1600px;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #f00;
+}
+#allSvg{
+    width: 150%;
+    height: 95%;
+}
+#allSvg path{
+    cursor: pointer;
+    transition: all .1s ease 0s;
+}
+.allPaths{
+    /* fill: #3c31dd; */
+    fill: white;
+}
+/* #allSvg path:hover{
+    fill: #4d71a5;
+} */
+#time{
+    font-family: serif;
+    font-size: 19px;
+    letter-spacing: 1.8px;
+    position: absolute;
+    top: 10px;
+
+}
+#name{
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 6px;
+    color: #0f0f10;
+}
+
 #canvas1{
     /*background-color: blue;*/
     /*position: absolute;*/
@@ -51,7 +91,8 @@ section{
 
 
 .blue{
-    background-color: #3c31dd;
+    /* background-color: #3c31dd; */
+    background-color: rgb(50, 50, 68);
 }
 .red{
     background-color: #dd3f31;

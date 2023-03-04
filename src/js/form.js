@@ -2,36 +2,58 @@
 
 document.addEventListener('DOMContentLoaded', function (params) {
     const form = document.getElementById('form');
-    form.addEventListener('submit', formSend)
+    form.addEventListener('submit', event => formSend(event, 'sendmail.php'))
 
-    async function formSend(e) {
+    async function formSend(e, php) {
         e.preventDefault();
         let error = formValidate(form)
-        let formData = new FormData(form)
-        formData.append('image', formImage.files[0]);
+        // let formData = new FormData(form)
+        // formData.append('image', formImage.files[0]);
 
-        if (error === 0) {
-            form.classList.add('_sending');
-            const response = await fetch('sendmail.php', {
-                method: 'POST',
-                body: formData,
-            })
-            if (response.ok) {
-                let result = await response.json();
-                alert(response.message);
-                form.classList.remove('_sending')
-                formPreview.innerHTML = '';
-                form.reset();
-            } else {
-                alert('Не удалось отправить')
-                form.classList.remove('_sending')
-            }
+        // if (error === 0) {
+        //     form.classList.add('_sending');
+        //     const response = await fetch('sendmail.php', {
+        //         method: 'POST',
+        //         body: formData,
+        //     })
+        //     if (response.ok) {
+        //         let result = await response.json();
+        //         alert(response.message);
+        //         form.classList.remove('_sending')
+        //         formPreview.innerHTML = '';
+        //         form.reset();
+        //     } else {
+        //         alert('Не удалось отправить')
+        //         form.classList.remove('_sending')
+        //     }
 
 
-        } else {
-            alert('Заполните обязательные поля')
-            form[0].focus()
-        }
+        // } else {
+        //     alert('Заполните обязательные поля')
+        //     form[0].focus()
+        // }
+        var req = new XMLHttpRequest();
+        req.open('POST', php, true);
+        req.onload = function () {
+            if (req.status >= 200 && req.status < 400) {
+                json = JSON.parse(this.response); // Ебанный internet explorer 11
+                console.log(json);
+
+                // ЗДЕСЬ УКАЗЫВАЕМ ДЕЙСТВИЯ В СЛУЧАЕ УСПЕХА ИЛИ НЕУДАЧИ
+                if (json.result == "success") {
+                    // Если сообщение отправлено
+                    alert("Сообщение отправлено 2");
+                } else {
+                    // Если произошла ошибка
+                    alert("Ошибка. Сообщение не отправлено 2");
+                }
+                // Если не удалось связаться с php файлом
+            } else { alert("Ошибка сервера. Номер: " + req.status); }
+        };
+
+        // Если не удалось отправить запрос. Стоит блок на хостинге
+        req.onerror = function () { alert("Ошибка отправки запроса 2"); };
+        req.send(new FormData(e.target));
     }
 
 
@@ -56,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function (params) {
                     formAddError(input);
                     error++;
                 }
-            }
+            } 
 
         }
         return error;

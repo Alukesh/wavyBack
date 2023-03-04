@@ -19,11 +19,11 @@ window.addEventListener('load', () => {
     let cloudRaf, cloudOn = false;
 
     let particleArray = [];
-    const colours = [
+    const colors = [
         // 'white',
         // 'rgba(255,255,255,0.3)',
         // 'rgba(173,216,230,0.8)',
-        'red',
+        // 'red',
         // 'rgba(211,211,211,0.8)',
         // 'black'
     ];
@@ -40,6 +40,7 @@ window.addEventListener('load', () => {
     //     mouse.x = event.x;
     //     mouse.y = event.y;
     // };
+    window.addEventListener('mousemove', mouseMove);
 
     canvasCloud.addEventListener('mouseover', () =>{
         window.addEventListener('mousemove', mouseMove);
@@ -50,13 +51,13 @@ window.addEventListener('load', () => {
         mouse.y = undefined;
     });
 
-    function Clouds(x, y, directionX, directionY, size, colour) {
+    function Clouds(x, y, directionX, directionY, size, color) {
         this.x = x;
         this.y = y;
         this.directionX = directionX;
         this.directionY = directionY;
         this.size = size;
-        this.colour = colour;
+        this.color = color;
     }
     // add draw method to clouds prototype
     Clouds.prototype.draw = function () {
@@ -64,8 +65,8 @@ window.addEventListener('load', () => {
         ctxC1.arc(this.x, this.y, this.size, 0, 2 * Math.PI, false);
         // ctxC1.fillRect(this.x, this.y, this.size, this.size);
         // ctxC1.fillStyle = 'black';
-        ctxC1.fillStyle = this.colour;
-        ctxC1.strokeStyle = 'red';
+        ctxC1.fillStyle = this.color;
+        ctxC1.strokeStyle = 'violet';
         ctxC1.fill();
         ctxC1.stroke();
     };
@@ -107,7 +108,7 @@ window.addEventListener('load', () => {
             let y = (Math.random() * ((innerHeight - size *2) - (size *2)) + size *2 );
             let directionX = (Math.random() * 0.2) - .1;
             let directionY = (Math.random() * 0.2) - .1;
-            let color = colours[Math.floor(Math.random() * colours.length)]
+            let color = colors[Math.floor(Math.random() * colors.length)]
 
             particleArray.push(new Clouds(x, y, directionX, directionY, size, color))
         }
